@@ -1,16 +1,27 @@
-import {createFileRoute, Link, useNavigate} from "@tanstack/react-router";
+import { createFileRoute, Link, useLoaderData, useNavigate } from "@tanstack/react-router";
 import Modal from "../_components/modal";
+import axios from "axios";
 
+
+// FETCHING DATA
+const fetchPhotos = async (id: string) => {
+  console.info('Fetching photos...')
+  await new Promise((r) => setTimeout(r, 500))
+  return axios
+    .get<Array<any>>(`https://fakestoreapi.in/api/products/${id}`)
+    .then((r) => r.data)
+}
+
+// ROUTE
 export const Route = createFileRoute("/photos_/$id/modal")({
   component: PhotoModalComponent,
+  loader: ({ params }) => fetchPhotos(params.id),
 });
 
 function PhotoModalComponent() {
   const navigate = useNavigate();
-  const photo = Route.useLoaderData();
-  const params = Route.useParams();
+  const { product } = useLoaderData<any>({ from: '/photos_/$id/modal' })
 
-  console.log(params);
 
   return (
     <Modal
@@ -19,7 +30,7 @@ function PhotoModalComponent() {
           navigate({
             to: "/photos/$id",
             params: {
-              id: params.id,
+              id: product.id,
             },
           });
         }
@@ -33,6 +44,11 @@ function PhotoModalComponent() {
         >
           Open in new tab (to test de-masking)
         </Link>
+      </div>
+      <div>
+        <img src={product.image} alt={product.title} />
+        <h2>{product.title}</h2>
+        <p>{product.price}</p>
       </div>
     </Modal>
   );

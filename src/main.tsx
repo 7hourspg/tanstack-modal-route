@@ -2,24 +2,24 @@ import {StrictMode} from "react";
 import ReactDOM from "react-dom/client";
 import {
   RouterProvider,
-  createRouteMask,
+  // createRouteMask,
   createRouter,
 } from "@tanstack/react-router";
 // Import the generated route tree
 import {routeTree} from "./routeTree.gen";
 
 // Create a route mask for the photo modal to photo route
-export const photoModalToPhotoMask = createRouteMask({
-  routeTree,
-  from: "/photos/$id/modal",
-  to: "/photos/$id",
-  params: true,
-});
+// export const photoModalToPhotoMask = createRouteMask({
+//   routeTree,
+//   from: "/photos/$id/modal",
+//   to: "/photos/$id",
+//   params: true,
+// });
 
 // Create a new router instance
 const router = createRouter({
   routeTree,
-  routeMasks: [photoModalToPhotoMask],
+  // routeMasks: [photoModalToPhotoMask],
   defaultPreload: "intent",
   scrollRestoration: true,
 });
