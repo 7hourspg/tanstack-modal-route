@@ -5,7 +5,6 @@ import axios from "axios";
 // FETCHING DATA
 const fetchPhotos = async (id: string) => {
   console.info('Fetching photos...')
-  await new Promise((r) => setTimeout(r, 500))
   return axios
     .get<Array<any>>(`https://fakestoreapi.in/api/products/${id}`)
     .then((r) => r.data)

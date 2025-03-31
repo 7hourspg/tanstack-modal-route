@@ -4,7 +4,6 @@ import axios from "axios";
 // FETCHING DATA
 const fetchPhotos = async () => {
   console.info('Fetching photos...')
-  await new Promise((r) => setTimeout(r, 500))
   return axios
     .get<Array<any>>('https://fakestoreapi.in/api/products?limit=10')
     .then((r) => r.data)
@@ -14,6 +13,9 @@ const fetchPhotos = async () => {
 export const Route = createFileRoute("/photos/")({
   component: RouteComponent,
   loader: fetchPhotos,
+  preload: true,
+  errorComponent: () => <div>Error</div>,
+  pendingComponent: () => <div>Loading...</div>,
 });
 
 // COMPONENT
@@ -25,13 +27,15 @@ function RouteComponent() {
     <div className="grid grid-cols-4 gap-4">
       {products.map((product: any) => (
         <Link to="/photos/$id/modal"
+          params={{ id: product.id }}
           mask={{
-            to: '/photos/$id/modal',
+            to: '/photos/$id',
+            unmaskOnReload: true,
             params: {
               id: product.id,
             },
           }}
-          params={{ id: product.id }} key={product.id}>
+          key={product.id}>
           <div className="border border-gray-300 rounded-md p-4">
             <img src={product.image} alt={product.title} />
             <h2>{product.title}</h2>
