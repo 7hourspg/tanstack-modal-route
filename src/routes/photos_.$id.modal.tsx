@@ -28,7 +28,7 @@ function PhotoModalComponent() {
       onOpenChange={(open) => {
         if (!open) {
           navigate({
-            to: "/photos/$id",
+            to: "/photos",
             params: {
               id: product.id,
             },
