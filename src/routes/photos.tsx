@@ -1,4 +1,4 @@
-import {createRoute, Link} from "@tanstack/react-router";
+import {createRoute, Link, Outlet} from "@tanstack/react-router";
 import axios from "axios";
 import {rootRoute} from "./__root";
 import {photoModalRoute} from "./photos-modal";
@@ -44,6 +44,7 @@ function RouteComponent() {
           </Link>
         ))}
       </div>
+      <Outlet />
     </div>
   );
 }

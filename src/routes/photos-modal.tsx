@@ -1,9 +1,4 @@
-import {
-  createRoute,
-  Link,
-  useLoaderData,
-  useNavigate,
-} from "@tanstack/react-router";
+import {createRoute, Link, useNavigate} from "@tanstack/react-router";
 import Modal from "../_components/modal";
 import axios from "axios";
 import {photosRoute} from "./photos";
@@ -27,7 +22,7 @@ export const photoModalRoute = createRoute({
 
 function PhotoModalComponent() {
   const navigate = useNavigate();
-  const {product} = useLoaderData<any>({from: "$id/modal"});
+  const {product} = photoModalRoute.useLoaderData<any>();
 
   return (
     <Modal
@@ -42,7 +37,7 @@ function PhotoModalComponent() {
         }
       }}
     >
-      <div className="bg-gray-100 dark:bg-gray-800 p-2 rounded-lg">
+      <div className="flex justify-center items-center bg-gray-100 dark:bg-gray-800 p-2 rounded-lg">
         <Link
           to="."
           target="_blank"
@@ -51,8 +46,12 @@ function PhotoModalComponent() {
           Open in new tab (to test de-masking)
         </Link>
       </div>
-      <div>
-        <img src={product.image} alt={product.title} />
+      <div className="flex flex-col items-center justify-center p-4">
+        <img
+          className="size-48 object-cover"
+          src={product.image}
+          alt={product.title}
+        />
         <h2>{product.title}</h2>
         <p>{product.price}</p>
       </div>
