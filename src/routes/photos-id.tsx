@@ -15,7 +15,6 @@ export const photoChildRoute = createRoute({
   path: "photos/$id",
   component: RouteComponent,
   loader: async ({params: {id}}) => fetchPhotos(id),
-  preload: true,
   errorComponent: () => <div>Error</div>,
   pendingComponent: () => <div>Loading...</div>,
 });

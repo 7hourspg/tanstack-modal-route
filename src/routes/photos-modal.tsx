@@ -18,7 +18,7 @@ const fetchPhotos = async (id: string) => {
 };
 
 // ROUTE
-export const photoModalToPhotoMask = createRoute({
+export const photoModalRoute = createRoute({
   getParentRoute: () => photosRoute,
   path: "$id/modal",
   component: PhotoModalComponent,

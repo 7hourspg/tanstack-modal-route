@@ -1,6 +1,7 @@
-import {createRoute, Link, useLoaderData} from "@tanstack/react-router";
+import {createRoute, Link} from "@tanstack/react-router";
 import axios from "axios";
 import {rootRoute} from "./__root";
+import {photoModalRoute} from "./photos-modal";
 
 // FETCHING DATA
 const fetchPhotos = async () => {
@@ -13,7 +14,7 @@ const fetchPhotos = async () => {
 // ROUTE
 export const photosRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/photos",
+  path: "photos",
   component: RouteComponent,
   loader: fetchPhotos,
   preload: true,
@@ -23,7 +24,7 @@ export const photosRoute = createRoute({
 
 // COMPONENT
 function RouteComponent() {
-  const {products} = useLoaderData<any>({from: "/photos"});
+  const {products} = photosRoute.useLoaderData<any>();
 
   return (
     <div>
@@ -31,9 +32,9 @@ function RouteComponent() {
       <div className="grid grid-cols-4 gap-4">
         {products.map((product: any) => (
           <Link
-            to="/photos/$id"
-            params={{id: product.id}}
+            to={photoModalRoute.to}
             key={product.id}
+            params={{id: product.id}}
           >
             <div className="border border-gray-300 rounded-md p-4">
               <img src={product.image} alt={product.title} />

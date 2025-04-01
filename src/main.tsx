@@ -2,6 +2,7 @@ import {StrictMode} from "react";
 import ReactDOM from "react-dom/client";
 import {
   RouterProvider,
+  createRouteMask,
   // createRouteMask,
   createRouter,
 } from "@tanstack/react-router";
@@ -10,28 +11,30 @@ import {
 import {rootRoute} from "./routes/__root";
 import {indexRoute} from "./routes/index";
 import {aboutRoute} from "./routes/about";
+// PHOTOS ROUTES
 import {photosRoute} from "./routes/photos";
 import {photoChildRoute} from "./routes/photos-id";
+import {photoModalRoute} from "./routes/photos-modal";
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
   aboutRoute,
-  photosRoute.addChildren([photoChildRoute]),
+  photoChildRoute,
+  photosRoute.addChildren([photoModalRoute]),
 ]);
 
 // Create a route mask for the photo modal to photo route
-// const photoModalToPhotoMask = createRouteMask({
-//   routeTree,
-//   from: "/photos/$id/modal",
-//   to: "/photos/$id",
-//   params: true,
-// });
+const photoModalToPhotoMask = createRouteMask({
+  routeTree,
+  from: "/photos/$id/modal",
+  to: "/photos/$id",
+  params: true,
+});
 
 // Set up a Router instance
 const router = createRouter({
   routeTree,
-  // routeMasks: [photoModalToPhotoMask],
-  defaultPreload: "intent",
+  routeMasks: [photoModalToPhotoMask],
   scrollRestoration: true,
 });
 
