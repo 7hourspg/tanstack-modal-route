@@ -5,18 +5,29 @@ import {
   // createRouteMask,
   createRouter,
 } from "@tanstack/react-router";
-// Import the generated route tree
-import {routeTree} from "./routeTree.gen";
+
+// ROUTES
+import {rootRoute} from "./routes/__root";
+import {indexRoute} from "./routes/index";
+import {aboutRoute} from "./routes/about";
+import {photosRoute} from "./routes/photos";
+import {photoChildRoute} from "./routes/photos-id";
+
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  aboutRoute,
+  photosRoute.addChildren([photoChildRoute]),
+]);
 
 // Create a route mask for the photo modal to photo route
-// export const photoModalToPhotoMask = createRouteMask({
+// const photoModalToPhotoMask = createRouteMask({
 //   routeTree,
 //   from: "/photos/$id/modal",
 //   to: "/photos/$id",
 //   params: true,
 // });
 
-// Create a new router instance
+// Set up a Router instance
 const router = createRouter({
   routeTree,
   // routeMasks: [photoModalToPhotoMask],

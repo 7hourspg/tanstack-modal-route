@@ -1,9 +1,14 @@
-import {createFileRoute} from "@tanstack/react-router";
+import {createRoute} from "@tanstack/react-router";
+import {rootRoute} from "./__root";
 
-export const Route = createFileRoute("/")({
+// ROUTE
+export const indexRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/",
   component: Index,
 });
 
+// COMPONENT
 function Index() {
   return (
     <div className="p-2 bg-green-500">
