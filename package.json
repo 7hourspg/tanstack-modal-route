@@ -12,7 +12,7 @@
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.6",
     "@tailwindcss/vite": "^4.0.17",
-    "@tanstack/react-router": "^1.114.29",
+    "@tanstack/react-router": "^1.130.12",
     "axios": "^1.8.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
-    "@tanstack/router-plugin": "^1.114.30",
+    "@tanstack/router-plugin": "^1.130.15",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
