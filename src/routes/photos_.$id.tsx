@@ -10,13 +10,13 @@ const fetchPhotos = async (id: string) => {
 };
 
 // ROUTE
-export const Route = createFileRoute("/photos/$id")({
+export const Route = createFileRoute("/photos_/$id")({
   component: RouteComponent,
   loader: ({params}) => fetchPhotos(params.id),
 });
 
 function RouteComponent() {
-  const {product} = useLoaderData<any>({from: "/photos/$id"});
+  const {product} = useLoaderData<any>({from: "/photos_/$id"});
   console.info(product);
 
   return (

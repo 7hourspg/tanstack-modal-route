@@ -1,4 +1,4 @@
-import {createFileRoute, Link, useLoaderData} from "@tanstack/react-router";
+import {createFileRoute, Link, Outlet, useLoaderData} from "@tanstack/react-router";
 import axios from "axios";
 
 // FETCHING DATA
@@ -10,7 +10,7 @@ const fetchPhotos = async () => {
 };
 
 // ROUTE
-export const Route = createFileRoute("/photos/")({
+export const Route = createFileRoute("/photos")({
   component: RouteComponent,
   loader: fetchPhotos,
   preload: true,
@@ -20,15 +20,16 @@ export const Route = createFileRoute("/photos/")({
 
 // COMPONENT
 function RouteComponent() {
-  const {products} = useLoaderData<any>({from: "/photos/"});
+  const {products} = useLoaderData<any>({from: "/photos"});
 
   return (
+    <>
     <div>
       <h1>Products: {products.length}</h1>
       <div className="grid grid-cols-4 gap-4">
         {products.map((product: any) => (
           <Link
-            to="/photos/$id/modal"
+            to="/photos/{$id}_modal"
             params={{id: product.id}}
             mask={{
               to: "/photos/$id",
@@ -48,5 +49,7 @@ function RouteComponent() {
         ))}
       </div>
     </div>
+    <Outlet />
+    </>
   );
 }

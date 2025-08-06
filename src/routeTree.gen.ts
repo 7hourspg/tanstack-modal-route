@@ -8,179 +8,140 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as PhotosRouteImport } from './routes/photos'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as PhotosIdRouteImport } from './routes/photos_.$id'
+import { Route as PhotosChar123idChar125_modalRouteImport } from './routes/photos.{$id}_modal'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as AboutImport } from './routes/about'
-import { Route as IndexImport } from './routes/index'
-import { Route as PhotosIndexImport } from './routes/photos.index'
-import { Route as PhotosIdImport } from './routes/photos.$id'
-import { Route as PhotosIdModalImport } from './routes/photos_.$id.modal'
-
-// Create/Update Routes
-
-const AboutRoute = AboutImport.update({
+const PhotosRoute = PhotosRouteImport.update({
+  id: '/photos',
+  path: '/photos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const IndexRoute = IndexImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const PhotosIndexRoute = PhotosIndexImport.update({
-  id: '/photos/',
-  path: '/photos/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const PhotosIdRoute = PhotosIdImport.update({
-  id: '/photos/$id',
+const PhotosIdRoute = PhotosIdRouteImport.update({
+  id: '/photos_/$id',
   path: '/photos/$id',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
+const PhotosChar123idChar125_modalRoute =
+  PhotosChar123idChar125_modalRouteImport.update({
+    id: '/{$id}_modal',
+    path: '/{$id}_modal',
+    getParentRoute: () => PhotosRoute,
+  } as any)
 
-const PhotosIdModalRoute = PhotosIdModalImport.update({
-  id: '/photos_/$id/modal',
-  path: '/photos/$id/modal',
-  getParentRoute: () => rootRoute,
-} as any)
-
-// Populate the FileRoutesByPath interface
+export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/photos': typeof PhotosRouteWithChildren
+  '/photos/{$id}_modal': typeof PhotosChar123idChar125_modalRoute
+  '/photos/$id': typeof PhotosIdRoute
+}
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/photos': typeof PhotosRouteWithChildren
+  '/photos/{$id}_modal': typeof PhotosChar123idChar125_modalRoute
+  '/photos/$id': typeof PhotosIdRoute
+}
+export interface FileRoutesById {
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/photos': typeof PhotosRouteWithChildren
+  '/photos/{$id}_modal': typeof PhotosChar123idChar125_modalRoute
+  '/photos_/$id': typeof PhotosIdRoute
+}
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/' | '/about' | '/photos' | '/photos/{$id}_modal' | '/photos/$id'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/about' | '/photos' | '/photos/{$id}_modal' | '/photos/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/photos'
+    | '/photos/{$id}_modal'
+    | '/photos_/$id'
+  fileRoutesById: FileRoutesById
+}
+export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  PhotosRoute: typeof PhotosRouteWithChildren
+  PhotosIdRoute: typeof PhotosIdRoute
+}
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
+    '/photos': {
+      id: '/photos'
+      path: '/photos'
+      fullPath: '/photos'
+      preLoaderRoute: typeof PhotosRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/photos/$id': {
-      id: '/photos/$id'
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/photos_/$id': {
+      id: '/photos_/$id'
       path: '/photos/$id'
       fullPath: '/photos/$id'
-      preLoaderRoute: typeof PhotosIdImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PhotosIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/photos/': {
-      id: '/photos/'
-      path: '/photos'
-      fullPath: '/photos'
-      preLoaderRoute: typeof PhotosIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/photos_/$id/modal': {
-      id: '/photos_/$id/modal'
-      path: '/photos/$id/modal'
-      fullPath: '/photos/$id/modal'
-      preLoaderRoute: typeof PhotosIdModalImport
-      parentRoute: typeof rootRoute
+    '/photos/{$id}_modal': {
+      id: '/photos/{$id}_modal'
+      path: '/{$id}_modal'
+      fullPath: '/photos/{$id}_modal'
+      preLoaderRoute: typeof PhotosChar123idChar125_modalRouteImport
+      parentRoute: typeof PhotosRoute
     }
   }
 }
 
-// Create and export the route tree
-
-export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/photos/$id': typeof PhotosIdRoute
-  '/photos': typeof PhotosIndexRoute
-  '/photos/$id/modal': typeof PhotosIdModalRoute
+interface PhotosRouteChildren {
+  PhotosChar123idChar125_modalRoute: typeof PhotosChar123idChar125_modalRoute
 }
 
-export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/photos/$id': typeof PhotosIdRoute
-  '/photos': typeof PhotosIndexRoute
-  '/photos/$id/modal': typeof PhotosIdModalRoute
+const PhotosRouteChildren: PhotosRouteChildren = {
+  PhotosChar123idChar125_modalRoute: PhotosChar123idChar125_modalRoute,
 }
 
-export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/photos/$id': typeof PhotosIdRoute
-  '/photos/': typeof PhotosIndexRoute
-  '/photos_/$id/modal': typeof PhotosIdModalRoute
-}
-
-export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/photos/$id' | '/photos' | '/photos/$id/modal'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/photos/$id' | '/photos' | '/photos/$id/modal'
-  id:
-    | '__root__'
-    | '/'
-    | '/about'
-    | '/photos/$id'
-    | '/photos/'
-    | '/photos_/$id/modal'
-  fileRoutesById: FileRoutesById
-}
-
-export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  PhotosIdRoute: typeof PhotosIdRoute
-  PhotosIndexRoute: typeof PhotosIndexRoute
-  PhotosIdModalRoute: typeof PhotosIdModalRoute
-}
+const PhotosRouteWithChildren =
+  PhotosRoute._addFileChildren(PhotosRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  PhotosRoute: PhotosRouteWithChildren,
   PhotosIdRoute: PhotosIdRoute,
-  PhotosIndexRoute: PhotosIndexRoute,
-  PhotosIdModalRoute: PhotosIdModalRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/about",
-        "/photos/$id",
-        "/photos/",
-        "/photos_/$id/modal"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/about": {
-      "filePath": "about.tsx"
-    },
-    "/photos/$id": {
-      "filePath": "photos.$id.tsx"
-    },
-    "/photos/": {
-      "filePath": "photos.index.tsx"
-    },
-    "/photos_/$id/modal": {
-      "filePath": "photos_.$id.modal.tsx"
-    }
-  }
-}
-ROUTE_MANIFEST_END */
