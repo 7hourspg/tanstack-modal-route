@@ -19,12 +19,13 @@ const fetchPhotos = async (id: string) => {
 // ROUTE
 export const Route = createFileRoute("/photos/{$id}_modal")({
   component: PhotoModalComponent,
-  loader: ({params}) => fetchPhotos(params.id),
+  loader: ({ params }: { params: { id: string } }) =>
+    fetchPhotos(params.id),
 });
 
 function PhotoModalComponent() {
   const navigate = useNavigate();
-  const {product} = useLoaderData<any>({from: "/photos/{$id}_modal"});
+  const { product } = useLoaderData<any>({ from: "/photos/{$id}_modal" });
 
   return (
     <Modal
